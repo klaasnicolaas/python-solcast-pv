@@ -46,8 +46,7 @@ pip install solcast-pv
 
 ### Rooftop Site
 
-> [!NOTE]
-> Requesting the list of all your created rooftop sites linked to your account, will not affect your daily rate limit.
+**Note**: _requesting the list of all your created rooftop sites linked to your account, will not affect your daily rate limit._
 
 | Name | Type | Description |
 | :--- | :--- | :---------- |
@@ -62,8 +61,7 @@ pip install solcast-pv
 
 ### Rate Limits
 
-> [!NOTE]
-> Requesting the rate limits for your account will not affect your daily rate limit.
+**Note**: _requesting the rate limits for your account will not affect your daily rate limit._
 
 | Name | Type | Description |
 | :--- | :--- | :---------- |
