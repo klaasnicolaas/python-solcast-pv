@@ -1,0 +1,10 @@
+# serializer version: 1
+# name: test_rate_limiting
+  RateLimit(daily_limit=10, remaining_daily=7, consumed_daily=3)
+# ---
+# name: test_rooftop_sites
+  list([
+    RooftopSite(name='Flat roof', resource_id='acqo-rh9b-hq68-3y5n', install_date=datetime.datetime(2023, 5, 11, 22, 0, tzinfo=datetime.timezone.utc), capacity=3.24, capacity_dc=2.64, azimuth=-120, tilt=25, loss_factor=0.98),
+    RooftopSite(name='Slanted roof', resource_id='ww00-3og6-dkor-4fy1', install_date=datetime.datetime(2024, 5, 11, 22, 0, tzinfo=datetime.timezone.utc), capacity=1.65, capacity_dc=1.95, azimuth=130, tilt=25, loss_factor=0.98),
+  ])
+# ---
