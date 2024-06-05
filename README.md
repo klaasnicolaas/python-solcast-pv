@@ -19,11 +19,16 @@
 [![Code Coverage][codecov-shield]][codecov-url]
 
 
-Asynchronous Python client for Solcast.
+Asynchronous Python client for [Solcast][solcast].
 
 ## About
 
-<!-- TODO: Add a short description about the project. -->
+[Solcast][solcast] provides solar radiation and solar power forecasts, estimated and
+historical data. This package allows you to get the data from the [API][solcast-api]
+and use it in your own application.
+
+> [!NOTE]
+> This package is still in development and rooftop forecast is not yet implemented.
 
 ## Installation
 
@@ -33,19 +38,53 @@ pip install solcast-pv
 
 ## Datasets
 
-<!-- TODO: Add a list of datasets that are supported by this package. -->
+- List of all your created rooftop sites linked to your account.
+- Get rate limits for your account.
+
+<details>
+  <summary>CLICK HERE! to see all datasets</summary>
+
+### Rooftop Site
+
+> [!NOTE]
+> Requesting the list of all your created rooftop sites linked to your account, will not affect your daily rate limit.
+
+| Name | Type | Description |
+| :--- | :--- | :---------- |
+| `name` | `str` | The name of the rooftop site. |
+| `resource_id` | `str` | The unique identifier of the rooftop site. |
+| `install_date` | `datetime` | The installation date of your solar panels. |
+| `capacity` | `float` | The capacity of the solar panels. |
+| `capacity_dc` | `float` | The capacity of the solar panels in DC. |
+| `azimuth` | `int` | The azimuth of the solar panels. |
+| `tilt` | `int` | The tilt of the solar panels. |
+| `loss_factor` | `float` | The loss factor of the solar panels. |
+
+### Rate Limits
+
+> [!NOTE]
+> Requesting the rate limits for your account will not affect your daily rate limit.
+
+| Name | Type | Description |
+| :--- | :--- | :---------- |
+| `daily_limit` | `int` | The daily limit of API calls. |
+| `remaining_daily` | `int` | The remaining daily limit of API calls. |
+| `consumed_daily` | `int` | How many API calls you have consumed today. |
+</details>
 
 ### Example
 
 ```python
 import asyncio
 
-from solcast_pv import Solcast
+from solcast_pv import Solcast, RooftopSite
 
 
 async def main() -> None:
     """Show example on using this package."""
-
+    async with Solcast(token="API_KEY") as client:
+        rooftops: list[RooftopSite] = await client.get_rooftop_sites()
+        print(rooftops)
 
 if __name__ == "__main__":
     asyncio.run(main())
@@ -115,6 +154,12 @@ To run just the Python tests:
 poetry run pytest
 ```
 
+To update the [syrupy](https://github.com/tophat/syrupy) snapshot tests:
+
+```bash
+poetry run pytest --snapshot-update
+```
+
 ## License
 
 MIT License
@@ -141,6 +186,8 @@ SOFTWARE.
 
 
 <!-- LINKS FROM PLATFORM -->
+[solcast]: https://solcast.com/
+[solcast-api]: https://docs.solcast.com.au/
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
