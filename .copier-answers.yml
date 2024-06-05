@@ -1,0 +1,17 @@
+# Changes here will be overwritten by Copier; NEVER EDIT MANUALLY
+_commit: v3.1.0
+_src_path: gh:klaasnicolaas/pypackage-template
+author_email: hello@student-techlife.com
+author_name: Klaas Schoute
+github_sponsors: true
+github_username: klaasnicolaas
+kofi_funding: true
+kofi_username: klaasnicolaas
+package_name: solcast_pv
+project_name: Solcast
+project_short_description: ''
+project_slug: solcast-pv
+run_poetry_install: false
+software_license: MIT License
+tweet_on_release: true
+twitter_username: klaasnicolaas
