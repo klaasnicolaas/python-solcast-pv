@@ -191,7 +191,7 @@ SOFTWARE.
 <!-- MARKDOWN LINKS & IMAGES -->
 [build-shield]: https://github.com/klaasnicolaas/python-solcast-pv/actions/workflows/tests.yaml/badge.svg
 [build-url]: https://github.com/klaasnicolaas/python-solcast-pv/actions/workflows/tests.yaml
-[codecov-shield]: https://codecov.io/gh/klaasnicolaas/python-solcast-pv/branch/main/graph/badge.svg?token=TOKEN
+[codecov-shield]: https://codecov.io/gh/klaasnicolaas/python-solcast-pv/branch/main/graph/badge.svg?token=X4799ZA1V2
 [codecov-url]: https://codecov.io/gh/klaasnicolaas/python-solcast-pv
 [commits-shield]: https://img.shields.io/github/commit-activity/y/klaasnicolaas/python-solcast-pv.svg
 [commits-url]: https://github.com/klaasnicolaas/python-solcast-pv/commits/main
@@ -201,7 +201,7 @@ SOFTWARE.
 [downloads-url]: https://pypistats.org/packages/solcast-pv
 [last-commit-shield]: https://img.shields.io/github/last-commit/klaasnicolaas/python-solcast-pv.svg
 [license-shield]: https://img.shields.io/github/license/klaasnicolaas/python-solcast-pv.svg
-[maintainability-shield]: https://api.codeclimate.com/v1/badges/TOKEN/maintainability
+[maintainability-shield]: https://api.codeclimate.com/v1/badges/37e0267f0b2ab438f848/maintainability
 [maintainability-url]: https://codeclimate.com/github/klaasnicolaas/python-solcast-pv/maintainability
 [maintenance-shield]: https://img.shields.io/maintenance/yes/2024.svg
 [project-stage-shield]: https://img.shields.io/badge/project%20stage-experimental-yellow.svg
