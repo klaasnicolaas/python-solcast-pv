@@ -82,6 +82,7 @@ async def main() -> None:
         rooftops: list[RooftopSite] = await client.get_rooftop_sites()
         print(rooftops)
 
+
 if __name__ == "__main__":
     asyncio.run(main())
 ```
