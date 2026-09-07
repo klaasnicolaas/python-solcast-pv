@@ -98,21 +98,11 @@ async with Solcast(token="API_KEY", timezone="Europe/Amsterdam") as client:
     print(forecast.energy_forecast_current_hour)  # kWh, next elapsed hour
 ```
 
-Forecast dictionaries contain average power in **kW**, keyed by interval end
-in UTC. Energy calculations use each interval's duration and include partial
-intervals. Calendar-day calculations use the selected timezone, including
-23- and 25-hour days. Peak-time methods return the end of the peak interval
-in that timezone and raise `RuntimeError` when no interval is available.
+Forecast dictionaries contain average power in **kW**, keyed by interval end in UTC. Energy calculations use each interval's duration and include partial intervals. Calendar-day calculations use the selected timezone, including 23- and 25-hour days. Peak-time methods return the end of the peak interval in that timezone and raise `RuntimeError` when no interval is available.
 
-Each forecast call makes one API request. The client does not poll or retry
-requests automatically. Hobbyist accounts currently allow up to **10 requests
-per UTC day**; schedule and cache requests in your application, accounting for
-all rooftop sites. HTTP 429 raises `SolcastRateLimitError` (a subclass of
-`SolcastConnectionError`). Malformed forecast data raises `SolcastResultsError`.
-See the [official hobbyist API documentation](https://docs.solcast.com.au/docs/section/rooftop-sites-hobbyist).
+Each forecast call makes one API request. The client does not poll or retry requests automatically. Hobbyist accounts currently allow up to **10 requests per UTC day**; schedule and cache requests in your application, accounting for all rooftop sites. HTTP 429 raises `SolcastRateLimitError` (a subclass of `SolcastConnectionError`). Malformed forecast data raises `SolcastResultsError`. See the [official hobbyist API documentation](https://docs.solcast.com.au/docs/section/rooftop-sites-hobbyist).
 
-Site listing and usage-allowance methods remain available for compatible
-accounts; their availability can differ from the documented forecast endpoint.
+Site listing and usage-allowance methods remain available for compatible accounts; their availability can differ from the documented forecast endpoint.
 
 More examples can be found in the [examples folder](./examples/).
 
