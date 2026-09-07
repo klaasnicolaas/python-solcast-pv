@@ -1,6 +1,5 @@
 """Basic tests for Solcast."""
 
-# pylint: disable=protected-access
 import asyncio
 from unittest.mock import patch
 

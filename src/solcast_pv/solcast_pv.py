@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import asyncio
 import socket
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from importlib import metadata
 from typing import Any, Self
 
@@ -16,11 +16,12 @@ from .exceptions import (
     SolcastAuthenticationError,
     SolcastConnectionError,
     SolcastError,
+    SolcastRateLimitError,
     SolcastResultsError,
 )
-from .models import RateLimit, RooftopSite
+from .models import RateLimit, RooftopForecast, RooftopSite
 
-VERSION = metadata.version(__package__)
+VERSION = metadata.version("solcast-pv")
 
 
 @dataclass
@@ -33,6 +34,7 @@ class Solcast:
     session: ClientSession | None = None
 
     _close_session: bool = False
+    timezone: str = field(default="UTC", kw_only=True)
 
     async def _request(
         self,
@@ -90,6 +92,9 @@ class Solcast:
             msg = "Timeout occurred while connecting to Solcast API."
             raise SolcastConnectionError(msg) from exception
         except ClientResponseError as exception:
+            if exception.status == 429:
+                msg = "Solcast API request quota exceeded."
+                raise SolcastRateLimitError(msg) from exception
             if exception.status == 401:
                 msg = "Invalid API key provided to Solcast API."
                 raise SolcastAuthenticationError(msg) from exception
@@ -115,6 +120,31 @@ class Solcast:
             )
 
         return await response.json()
+
+    async def get_rooftop_forecast(
+        self, resource_id: str, hours: int = 48
+    ) -> RooftopForecast:
+        """Get rooftop forecast data - legacy hobbyist.
+
+        Args:
+        ----
+            resource_id: The unique identifier for the rooftop site.
+            hours: The number of hours to forecast.
+
+        Returns:
+        -------
+            RooftopForecast: The rooftop forecast data.
+
+        """
+        response = await self._request(
+            f"rooftop_sites/{resource_id}/forecasts",
+            params={"format": "json", "hours": hours},
+        )
+        try:
+            return RooftopForecast.from_dict(response, self.timezone)
+        except (KeyError, TypeError, ValueError) as exception:
+            msg = "Invalid rooftop forecast response from Solcast API."
+            raise SolcastResultsError(msg) from exception
 
     async def get_rooftop_sites(self) -> list[RooftopSite]:
         """Get the rooftop sites for the Solcast API.

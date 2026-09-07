@@ -16,6 +16,7 @@
 [![Build Status][build-shield]][build-url]
 [![Typing Status][typing-shield]][typing-url]
 [![Code Coverage][codecov-shield]][codecov-url]
+[![OpenSSF Scorecard][scorecard-shield]][scorecard-url]
 
 Asynchronous Python client for [Solcast][solcast].
 
@@ -25,8 +26,7 @@ Asynchronous Python client for [Solcast][solcast].
 historical data. This package allows you to get the data from the [API][solcast-api]
 and use it in your own application.
 
-> [!NOTE]
-> This package is still in development and rooftop forecast is not yet implemented.
+Rooftop forecasts are supported for Solcast hobbyist accounts.
 
 ## Installation
 
@@ -38,6 +38,7 @@ pip install solcast-pv
 
 - List of all your created rooftop sites linked to your account.
 - Get rate limits for your account.
+- Fetch rooftop forecasts, including central, lower and upper power estimates.
 
 <details>
   <summary>CLICK HERE! to see all datasets</summary>
@@ -86,6 +87,22 @@ async def main() -> None:
 if __name__ == "__main__":
     asyncio.run(main())
 ```
+
+### Rooftop forecast
+
+```python
+async with Solcast(token="API_KEY", timezone="Europe/Amsterdam") as client:
+    forecast = await client.get_rooftop_forecast("ROOFTOP_RESOURCE_ID", hours=48)
+    print(forecast.total_energy_forecast_today)  # kWh, local calendar day
+    print(forecast.power_forecast_now)  # W
+    print(forecast.energy_forecast_current_hour)  # kWh, next elapsed hour
+```
+
+Forecast dictionaries contain average power in **kW**, keyed by interval end in UTC. Energy calculations use each interval's duration and include partial intervals. Calendar-day calculations use the selected timezone, including 23- and 25-hour days. Peak-time methods return the end of the peak interval in that timezone and raise `RuntimeError` when no interval is available.
+
+Each forecast call makes one API request. The client does not poll or retry requests automatically. Hobbyist accounts currently allow up to **10 requests per UTC day**; schedule and cache requests in your application, accounting for all rooftop sites. HTTP 429 raises `SolcastRateLimitError` (a subclass of `SolcastConnectionError`). Malformed forecast data raises `SolcastResultsError`. See the [official hobbyist API documentation](https://docs.solcast.com.au/docs/section/rooftop-sites-hobbyist).
+
+Site listing and usage-allowance methods remain available for compatible accounts; their availability can differ from the documented forecast endpoint.
 
 More examples can be found in the [examples folder](./examples/).
 
@@ -159,7 +176,7 @@ poetry run pytest --snapshot-update
 
 MIT License
 
-Copyright (c) 2024-2025 Klaas Schoute
+Copyright (c) 2024-2026 Klaas Schoute
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -198,7 +215,7 @@ SOFTWARE.
 [downloads-url]: https://pypistats.org/packages/solcast-pv
 [last-commit-shield]: https://img.shields.io/github/last-commit/klaasnicolaas/python-solcast-pv.svg
 [license-shield]: https://img.shields.io/github/license/klaasnicolaas/python-solcast-pv.svg
-[maintenance-shield]: https://img.shields.io/maintenance/yes/2025.svg
+[maintenance-shield]: https://img.shields.io/maintenance/yes/2026.svg
 [project-stage-shield]: https://img.shields.io/badge/project%20stage-experimental-yellow.svg
 [pypi]: https://pypi.org/project/solcast-pv/
 [python-versions-shield]: https://img.shields.io/pypi/pyversions/solcast-pv
@@ -210,3 +227,5 @@ SOFTWARE.
 [poetry-install]: https://python-poetry.org/docs/#installation
 [poetry]: https://python-poetry.org
 [prek]: https://github.com/j178/prek
+[scorecard-shield]: https://api.scorecard.dev/projects/github.com/klaasnicolaas/python-solcast-pv/badge
+[scorecard-url]: https://scorecard.dev/viewer/?uri=github.com/klaasnicolaas/python-solcast-pv
