@@ -15,3 +15,7 @@ class SolcastAuthenticationError(SolcastError):
 
 class SolcastResultsError(SolcastError):
     """Solcast results exception."""
+
+
+class SolcastRateLimitError(SolcastConnectionError):
+    """Error indicating that the Solcast request quota is exhausted."""
