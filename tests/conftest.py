@@ -9,7 +9,7 @@ from solcast_pv import Solcast
 
 
 @pytest.fixture(name="solcast_client")
-async def client() -> AsyncGenerator[Solcast, None]:
+async def client() -> AsyncGenerator[Solcast]:
     """Return a Solcast client."""
     async with (
         ClientSession() as session,
